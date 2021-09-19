@@ -14,12 +14,14 @@
 ### Dev Tools:
 
 1. Run `pytest {test_directory}` to start tests.
+
 2. Run `black {script}` to auto-reformat code.
 3. Run `isort {script}` to auto-sort all imports.
 ---
 ### Environment Variables Setup:
 
 User environment variables file (.env) should be created as described below:  
+
 
 HOST=IMAP SERVER DATA
 
@@ -28,7 +30,6 @@ MAIL_USERNAME=MAILBOX LOGIN
 PASSWORD=MAILBOX PASSWORD
 
 DOWNLOAD_FOLDER=DOWNLOAD PATH FOLDER
-
 ---
 ### Make script executable
 
