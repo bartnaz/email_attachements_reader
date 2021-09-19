@@ -14,18 +14,22 @@
 ### Dev Tools:
 
 1. Run `pytest {test_directory}` to start tests.
-2. Run `black {script} .` to auto-reformat code.
-3. Run `isort {script}.` to auto-sort all imports
+
+2. Run `black {script}` to auto-reformat code.
+3. Run `isort {script}` to auto-sort all imports.
 ---
 ### Environment Variables Setup:
 
 User environment variables file (.env) should be created as described below:  
 
-`Mailbox_credentials`  
-HOST={imap server}
-MAIL_USERNAME={mailbox login}
-PASSWORD={mailbox password}
-DOWNLOAD_FOLDER={download_folder_directory}
+
+HOST=IMAP SERVER DATA
+
+MAIL_USERNAME=MAILBOX LOGIN
+
+PASSWORD=MAILBOX PASSWORD
+
+DOWNLOAD_FOLDER=DOWNLOAD PATH FOLDER
 ---
 ### Make script executable
 
@@ -35,17 +39,16 @@ DOWNLOAD_FOLDER={download_folder_directory}
 ---
 ### Special thanx to imbox author
 
-Special thanks to imbox library author: https://github.com/martinrusev/imbox
-This is imbox library customization project
+1. Special thanks to imbox library author: https://github.com/martinrusev/imbox
 ---
 ### Docs/ followups
 
-__(technical)__ Project should contain Tkinter GUI
+__(technical)__ Project should contain Tkinter GUI.
 
-__(technical)__ Currently datetime filter is not implemented yet
+__(technical)__ Currently datetime filter is not implemented yet.
 
-__(technical)__ Script currently run on Gmail mailbox, more integrations should be tested/ implemented
+__(technical)__ Script currently run on Gmail mailbox, more integrations should be tested/ implemented.
 
-__(technical)__ Complex error handler should be implemented
+__(technical)__ Complex error handler should be implemented.
 
 ---
