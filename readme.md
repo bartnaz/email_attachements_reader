@@ -21,10 +21,11 @@
 
 User environment variables file (.env) should be created as described below:  
 
-HOST=imap server
-MAIL_USERNAME=mailbox login
-PASSWORD=mailbox password
-DOWNLOAD_FOLDER=download_folder_directory
+HOST=imap server,
+MAIL_USERNAME=mailbox login,
+PASSWORD=mailbox password,
+DOWNLOAD_FOLDER=download_folder_directory,
+
 ---
 ### Make script executable
 
