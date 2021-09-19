@@ -38,3 +38,14 @@ DOWNLOAD_FOLDER={download_folder_directory}
 Special thanks to imbox library author: https://github.com/martinrusev/imbox
 This is imbox library customization project
 ---
+### Docs/ followups
+
+__(technical)__ Project should contain Tkinter GUI
+
+__(technical)__ Currently datetime filter is not implemented yet
+
+__(technical)__ Script currently run on Gmail mailbox, more integrations should be tested/ implemented
+
+__(technical)__ Complex error handler should be implemented
+
+---
