@@ -24,6 +24,28 @@ class AuthMixin:
 
 
 class ServiceMixin:
+    def remove_attachements_directory(self):
+        files_in_dir = os.listdir(self.download_folder)
+        for file in files_in_dir:
+            os.remove(f"{self.download_folder}\{file}")
+        if os.path.isdir(self.download_folder):
+            os.removedirs(self.download_folder)
+
+    def specify_config_file(self):
+        date_input = input(
+            "Prosze podaj date od ktorej mam pobrac zalaczniki np. 2021-9-21: "
+        )
+        (
+            self.year_filter_variable,
+            self.month_filter_variable,
+            self.day_filter_variable,
+        ) = self._prepare_data_from_string(date_input)
+
     @staticmethod
-    def get_current_month_mail_filter():
-        return datetime.date.today().year, datetime.date.today().month, 1
+    def _prepare_data_from_string(data):
+        split_data = data.split("-")
+        int_data = []
+        for item in split_data:
+            item = int(item)
+            int_data.append(item)
+        return int_data
