@@ -25,16 +25,15 @@ class AuthMixin:
 
 class ServiceMixin:
     def remove_attachements_directory(self):
-        files_in_dir = os.listdir(self.download_folder)
-        for file in files_in_dir:
-            os.remove(f"{self.download_folder}\{file}")
         if os.path.isdir(self.download_folder):
+            files_in_dir = os.listdir(self.download_folder)
+            for file in files_in_dir:
+                os.remove(f"{self.download_folder}\{file}")
             os.removedirs(self.download_folder)
 
     def specify_config_file(self):
-        date_input = input(
-            "Prosze podaj date od ktorej mam pobrac zalaczniki np. 2021-9-21: "
-        )
+        load_dotenv()
+        date_input = f"{os.getenv('LOAD_DATA_FROM')}"
         (
             self.year_filter_variable,
             self.month_filter_variable,
