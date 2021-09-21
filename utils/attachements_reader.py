@@ -7,16 +7,23 @@ from imbox import Imbox
 from . import AuthMixin, ServiceMixin
 
 
-class EmailReader:
+class EmailReader(ServiceMixin):
     def __init__(self):
         self.auth_data = None
         self.download_folder = None
+        self.year_filter_variable = None
+        self.month_filter_variable = None
+        self.day_filter_variable = None
+
+    def prepare_upstream_context(self):
+        self.auth_data = AuthMixin().get_auth_data()
+        self.download_folder = self.auth_data.download_folder
+        self.remove_attachements_directory()
+        self.specify_config_file()
 
     def get_attachements(self):
-
         try:
-            self.auth_data = AuthMixin().get_auth_data()
-            self.download_folder = self.auth_data.download_folder
+            self.prepare_upstream_context()
 
             if not os.path.isdir(self.download_folder):
                 os.makedirs(self.download_folder, exist_ok=True)
@@ -29,7 +36,14 @@ class EmailReader:
                 ssl_context=None,
                 starttls=False,
             )
-            messages = mail.messages(date__gt=datetime.date(2018, 7, 30))
+
+            messages = mail.messages(
+                date__gt=datetime.date(
+                    self.year_filter_variable,
+                    self.month_filter_variable,
+                    self.day_filter_variable,
+                )
+            )
 
             for (uid, message) in messages:
 
@@ -44,4 +58,6 @@ class EmailReader:
 
             mail.logout()
         except:
-            print("An unexpected error occurred. Please check again your .env file in work directory")
+            print(
+                "An unexpected error occurred. Please check again your .env file in work directory"
+            )
