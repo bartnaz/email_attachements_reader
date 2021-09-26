@@ -1,9 +1,14 @@
 import os
-import datetime
 
 from dotenv import load_dotenv
-
 from models import UpstreamLoginModel
+
+FILE_TYPE_MAP = {
+    "pdf": "pdf",
+    "7z": "7z",
+    "zip": "zip",
+    "rar": "rar",
+}
 
 
 class AuthMixin:
@@ -24,6 +29,18 @@ class AuthMixin:
 
 
 class ServiceMixin:
+    def save_attachements(self, attachment, att_fn):
+        download_path = f"{self.download_folder}/{att_fn}"
+        if os.path.exists(download_path):
+            download_path = f"{self.download_folder}/{att_fn}(1)"
+        with open(download_path, "wb") as fp:
+            fp.write(attachment.get("content").read())
+
+    def get_only_pdf_attachements(self, att_name: str):
+        name_check = att_name.split(".")
+        if FILE_TYPE_MAP.get(name_check[-1], None) != None:
+            return att_name
+
     def remove_attachements_directory(self):
         if os.path.isdir(self.download_folder):
             files_in_dir = os.listdir(self.download_folder)
