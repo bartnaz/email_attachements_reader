@@ -3,6 +3,13 @@ import os
 from dotenv import load_dotenv
 from models import UpstreamLoginModel
 
+FILE_TYPE_MAP = {
+    "pdf": "pdf",
+    "7z": "7z",
+    "zip": "zip",
+    "rar": "rar",
+}
+
 
 class AuthMixin:
     def __init__(self):
@@ -31,7 +38,7 @@ class ServiceMixin:
 
     def get_only_pdf_attachements(self, att_name: str):
         name_check = att_name.split(".")
-        if name_check[-1] == "pdf":
+        if FILE_TYPE_MAP.get(name_check[-1], None) != None:
             return att_name
 
     def remove_attachements_directory(self):
