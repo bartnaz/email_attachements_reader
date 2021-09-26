@@ -1,5 +1,5 @@
-import os
 import datetime
+import os
 import traceback
 
 from imbox import Imbox
@@ -46,13 +46,14 @@ class EmailReader(ServiceMixin):
             )
 
             for (uid, message) in messages:
-
                 for idx, attachment in enumerate(message.attachments):
                     try:
                         att_fn = attachment.get("filename")
-                        download_path = f"{self.download_folder}/{att_fn}"
-                        with open(download_path, "wb") as fp:
-                            fp.write(attachment.get("content").read())
+                        att_fn = self.get_only_pdf_attachements(att_fn)
+                        if att_fn != None:
+                            self.save_attachements(attachment, att_fn)
+                        else:
+                            break
                     except:
                         print(traceback.print_exc())
 
