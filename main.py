@@ -1,9 +1,3 @@
-from utils import EmailReader
+from utils import GuiClass
 
-
-def main():
-    EmailReader().get_attachements()
-
-
-if __name__ == "__main__":
-    main()
+GuiClass().gui()
