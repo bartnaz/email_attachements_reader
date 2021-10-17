@@ -37,25 +37,41 @@ class EmailReader(ServiceMixin):
                 starttls=False,
             )
 
-            messages = mail.messages(
-                date__gt=datetime.date(
-                    self.year_filter_variable,
-                    self.month_filter_variable,
-                    self.day_filter_variable,
+            specific_folder_list = [
+                "INBOX",
+                "INBOX.arrows",
+                "INBOX.eden",
+                "INBOX.ichp",
+                "INBOX.inne",
+                "INBOX.kielce",
+                "INBOX.nazbud_ksiegowa",
+                "INBOX.orange",
+                "INBOX.print",
+                "INBOX.tadex",
+                "INBOX.upc",
+            ]
+            for folder in specific_folder_list:
+                messages = None
+                messages = mail.messages(
+                    folder=folder,
+                    date__gt=datetime.date(
+                        self.year_filter_variable,
+                        self.month_filter_variable,
+                        self.day_filter_variable,
+                    ),
                 )
-            )
 
-            for (uid, message) in messages:
-                for idx, attachment in enumerate(message.attachments):
-                    try:
-                        att_fn = attachment.get("filename")
-                        att_fn = self.get_only_pdf_attachements(att_fn)
-                        if att_fn != None:
-                            self.save_attachements(attachment, att_fn)
-                        else:
-                            break
-                    except:
-                        print(traceback.print_exc())
+                for (uid, message) in messages:
+                    for idx, attachment in enumerate(message.attachments):
+                        try:
+                            att_fn = attachment.get("filename")
+                            att_fn = self.get_only_pdf_attachements(att_fn)
+                            if att_fn != None:
+                                self.save_attachements(attachment, att_fn)
+                            else:
+                                break
+                        except:
+                            print(traceback.print_exc())
 
             mail.logout()
         except:
