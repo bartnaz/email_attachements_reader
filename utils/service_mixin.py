@@ -5,6 +5,7 @@ from models import UpstreamLoginModel
 
 FILE_TYPE_MAP = {
     "pdf": "pdf",
+    "PDF": "PDF",
     "7z": "7z",
     "zip": "zip",
     "rar": "rar",
