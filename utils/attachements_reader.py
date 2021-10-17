@@ -5,7 +5,7 @@ import traceback
 from imbox import Imbox
 
 from . import AuthMixin, ServiceMixin
-
+from .consts import specific_folder_list
 
 class EmailReader(ServiceMixin):
     def __init__(self):
@@ -37,19 +37,7 @@ class EmailReader(ServiceMixin):
                 starttls=False,
             )
 
-            specific_folder_list = [
-                "INBOX",
-                "INBOX.arrows",
-                "INBOX.eden",
-                "INBOX.ichp",
-                "INBOX.inne",
-                "INBOX.kielce",
-                "INBOX.nazbud_ksiegowa",
-                "INBOX.orange",
-                "INBOX.print",
-                "INBOX.tadex",
-                "INBOX.upc",
-            ]
+            
             for folder in specific_folder_list:
                 messages = None
                 messages = mail.messages(
@@ -59,6 +47,7 @@ class EmailReader(ServiceMixin):
                         self.month_filter_variable,
                         self.day_filter_variable,
                     ),
+                    # date__lt=datetime.date(2021, 9, 30),
                 )
 
                 for (uid, message) in messages:

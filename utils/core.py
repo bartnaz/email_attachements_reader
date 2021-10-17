@@ -35,7 +35,7 @@ class GuiClass:
 
 
         # define buttons
-        button_1 = Button(self.root, text='', padx='40', pady='20')
+        button_1 = Button(self.root, text='Zalaczniki z poprzedniego miesiaca', padx='40', pady='20')
         button_2 = Button(self.root, text='Pobierz zalaczniki', padx='140', pady='20', command=lambda:self.reader())
         button_3 = Button(self.root, text='', padx='60', pady='20')
         button_clear = Button(self.root, text='Clear window', padx='60', pady='10', command=self.button_clear)

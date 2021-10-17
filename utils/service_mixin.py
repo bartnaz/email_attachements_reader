@@ -2,14 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from models import UpstreamLoginModel
-
-FILE_TYPE_MAP = {
-    "pdf": "pdf",
-    "PDF": "PDF",
-    "7z": "7z",
-    "zip": "zip",
-    "rar": "rar",
-}
+from .consts import FILE_TYPE_MAP
 
 
 class AuthMixin:
