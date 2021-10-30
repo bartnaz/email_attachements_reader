@@ -1,3 +1,4 @@
+import datetime
 import os
 
 from dotenv import load_dotenv
@@ -49,14 +50,34 @@ class ServiceMixin:
                 os.remove(f"{self.download_folder}\{file}")
             os.removedirs(self.download_folder)
 
-    def specify_config_file(self):
-        load_dotenv()
-        date_input = f"{os.getenv('LOAD_DATA_FROM')}"
-        (
+    def get_month_from_range(self, range):
+        current_month, current_year = self._get_current_date()
+        self.year_filter_variable = current_year
+        self.month_filter_variable = self._get_real_month(current_month, range)
+        self.day_filter_variable = 1
+        return (
             self.year_filter_variable,
             self.month_filter_variable,
             self.day_filter_variable,
-        ) = self._prepare_data_from_string(date_input)
+        )
+
+    def load_env_folders(self):
+        folder_list = os.getenv("specific_folder_list")
+        return folder_list.split(", ")
+
+    @staticmethod
+    def _get_real_month(current_month, range):
+        if current_month < 4:
+            diff = current_month - range
+            current_month = 12 - diff
+            return current_month
+        current_month = current_month - range
+        return current_month
+
+    @staticmethod
+    def _get_current_date():
+        current_date = datetime.date.today()
+        return int(current_date.strftime("%m")), int(current_date.strftime("%Y"))
 
     @staticmethod
     def _prepare_data_from_string(data):

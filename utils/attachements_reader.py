@@ -11,19 +11,22 @@ class EmailReader(ServiceMixin):
     def __init__(self):
         self.auth_data = None
         self.download_folder = None
+        self.folder_list = None
         self.year_filter_variable = None
         self.month_filter_variable = None
         self.day_filter_variable = None
+        self.range = None
 
-    def prepare_upstream_context(self):
+    def prepare_upstream_context(self, range: int):
         self.auth_data = AuthMixin().get_auth_data()
         self.download_folder = self.auth_data.download_folder
+        self.folder_list = self.load_env_folders()
         self.remove_attachements_directory()
-        self.specify_config_file()
+        self.get_month_from_range(range)
 
-    def get_attachements(self):
+    def get_attachements(self, range: int):
         try:
-            self.prepare_upstream_context()
+            self.prepare_upstream_context(range)
 
             if not os.path.isdir(self.download_folder):
                 os.makedirs(self.download_folder, exist_ok=True)
@@ -37,20 +40,7 @@ class EmailReader(ServiceMixin):
                 starttls=False,
             )
 
-            specific_folder_list = [
-                "INBOX",
-                "INBOX.arrows",
-                "INBOX.eden",
-                "INBOX.ichp",
-                "INBOX.inne",
-                "INBOX.kielce",
-                "INBOX.nazbud_ksiegowa",
-                "INBOX.orange",
-                "INBOX.print",
-                "INBOX.tadex",
-                "INBOX.upc",
-            ]
-            for folder in specific_folder_list:
+            for folder in self.folder_list:
                 messages = None
                 messages = mail.messages(
                     folder=folder,
