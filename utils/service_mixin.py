@@ -1,7 +1,9 @@
+import datetime
 import os
 
 from dotenv import load_dotenv
 from models import UpstreamLoginModel
+from .consts import MONTH_FEBRUARY_MAP, MONTH_JANUARY_MAP, MONTH_MARCH_MAP
 
 FILE_TYPE_MAP = {
     "pdf": "pdf",
@@ -46,17 +48,47 @@ class ServiceMixin:
         if os.path.isdir(self.download_folder):
             files_in_dir = os.listdir(self.download_folder)
             for file in files_in_dir:
-                os.remove(f"{self.download_folder}\{file}")
+                os.remove(f"{self.download_folder}/{file}")
             os.removedirs(self.download_folder)
 
-    def specify_config_file(self):
-        load_dotenv()
-        date_input = f"{os.getenv('LOAD_DATA_FROM')}"
-        (
+    def get_month_from_range(self, range):
+        current_month, current_year = self._get_current_date()
+        self.year_filter_variable = current_year
+        self.month_filter_variable = self._get_real_month(current_month, range)
+        self.day_filter_variable = 1
+        return (
             self.year_filter_variable,
             self.month_filter_variable,
             self.day_filter_variable,
-        ) = self._prepare_data_from_string(date_input)
+        )
+    
+    @staticmethod
+    def load_env_folders():
+        folder_list = os.getenv("SPECIFIC_FOLDER_LIST")
+        return folder_list.split(", ")
+
+    @staticmethod
+    def _get_real_month(current_month, range):
+        if current_month < 4:
+            if current_month == 3:
+                current_month = MONTH_MARCH_MAP.get(range)
+                return current_month
+            elif current_month == 2:
+                current_month = MONTH_FEBRUARY_MAP.get(range)
+                return current_month
+            elif current_month == 1:
+                current_month = MONTH_JANUARY_MAP.get(range)
+                return current_month
+            diff = current_month - range
+            current_month = 12 - abs(diff)
+            return current_month
+        current_month = current_month - range
+        return current_month
+
+    @staticmethod
+    def _get_current_date():
+        current_date = datetime.date.today()
+        return int(current_date.strftime("%m")), int(current_date.strftime("%Y"))
 
     @staticmethod
     def _prepare_data_from_string(data):
