@@ -31,11 +31,13 @@ PASSWORD=MAILBOX PASSWORD
 
 DOWNLOAD_FOLDER=DOWNLOAD PATH FOLDER
 
+SPECIFIC_FOLDER_LIST=STRING WITH INBOX FOLDERS LIST 
+
 ---
 ### Make script executable
 
 1. Get inside project workdirectory: `cd {path_to_work_directory}`
-2. Run pyinstaller command: `pyinstaller --onefile main.py`
+2. Run pyinstaller command: `pyinstaller --onefile -w main.py`
 3. Executable script is inside {dist} directory
 ---
 ### Special thanx to imbox author

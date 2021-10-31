@@ -27,7 +27,7 @@ class GuiClass:
         self.root = Tk()
         self.root.title("Attachments reader TERMINAL")
 
-        my_img = ImageTk.PhotoImage(Image.open("static\images\logo1.png"))
+        my_img = ImageTk.PhotoImage(Image.open("logo1.png"))
         my_label = Label(image=my_img)
 
         # display declaration
